@@ -29,6 +29,7 @@ test {
 }
 
 
-bootBuildImage{
-    imageName='flozano/aws-eks-identity-pod-sample'
+bootBuildImage {
+    imageName = 'flozano/aws-eks-identity-pod-sample'
+    createdDate = "now"
 }
