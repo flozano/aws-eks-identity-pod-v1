@@ -1,0 +1,10 @@
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+    group = 'io.github.flozano'
+}
+
+ext {
+    sdkVersion = '1.12.686'
+}
