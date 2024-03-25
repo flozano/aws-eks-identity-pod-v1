@@ -20,21 +20,24 @@ import io.github.flozano.eksidentitypod.EKSIdentityPodCredentialsProvider;
 @Component
 class BucketListing {
 
-	private final AmazonS3 client;
-
-	BucketListing() {
-		client = AmazonS3Client.builder().withCredentials(
-				new AWSCredentialsProviderChain(
-						new EKSIdentityPodCredentialsProvider(), // added
-						new EnvironmentVariableCredentialsProvider(),
-						new SystemPropertiesCredentialsProvider(),
-						WebIdentityTokenCredentialsProvider.create(),
-						new ProfileCredentialsProvider(),
-						new EC2ContainerCredentialsProviderWrapper()
-				)).build();
+	public List<String> listBuckets(String region) {
+		AmazonS3 client = null;
+		try {
+			client = getClient(region);
+			return client.listBuckets().stream().map(Bucket::getName).collect(Collectors.toList());
+		} finally {
+			if (client != null) {
+				client.shutdown();
+			}
+		}
 	}
 
-	public List<String> listBuckets() {
-		return client.listBuckets().stream().map(Bucket::getName).collect(Collectors.toList());
+	private AmazonS3 getClient(String region) {
+		return AmazonS3Client.builder().withCredentials(
+				new AWSCredentialsProviderChain(new EKSIdentityPodCredentialsProvider(), // added
+						new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(),
+						WebIdentityTokenCredentialsProvider.create(), new ProfileCredentialsProvider(),
+						new EC2ContainerCredentialsProviderWrapper())).withRegion(region).build();
+
 	}
 }
