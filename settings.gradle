@@ -3,7 +3,7 @@ plugins {
 }
 reckon {
     defaultInferredScope = 'patch'
-    stages 'beta', 'rc', 'final'
+    snapshots()
     scopeCalc = calcScopeFromProp().or(calcScopeFromCommitMessages())
     stageCalc = calcStageFromProp()
 }

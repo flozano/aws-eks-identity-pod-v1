@@ -1,3 +1,8 @@
+plugins {
+    id 'maven-publish'
+}
+
+
 allprojects {
     repositories {
         mavenCentral()
@@ -7,4 +12,19 @@ allprojects {
 
 ext {
     sdkVersion = '1.12.686'
+    junitVersion = '5.9.1'
+
+    Meta = [
+            desc          : "EKS Identity Pod backport for SDK v1",
+            license       : "Apache-2.0",
+            licenseUrl    : "https://opensource.org/licenses/Apache-2.0",
+            githubRepo    : "flozano/aws-eks-identity-pod",
+            release       : "https://s01.oss.sonatype.org/service/local/",
+            snapshot      : "https://s01.oss.sonatype.org/content/repositories/snapshots/",
+            developerId   : "flozano",
+            developerName : "Francisco A. Lozano",
+            developerEmail: "flozano+eksidentitypod@gmail.com"
+    ]
 }
+
+
